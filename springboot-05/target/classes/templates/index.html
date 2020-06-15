@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link type="text/css" rel="stylesheet" href="bootstrap.min.css" th:href="@{bootstrap.min.css}"/>
+
+    <title>User Management with Springboot </title>
+</head>
+<body>
+    <h2>User Management</h2>
+    <div class="container col-6">
+        <form th:object="${search}" th:action="@{/search}" method="post">
+            <input type="text" name="name" id="name" th:value="${search}">
+            <input type="submit" value="search">
+            <div th:if="${not#lists.isEmpty(search)}">
+                <h2>User List</h2>
+                <table class="table table-striped">
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>phone</th>
+                        <th>email</th>
+                    </tr>
+                    <tr th:each="search:${search}">
+                        <td th:text="${search.id}">id</td>
+                        <td th:text="${search.name}">name</td>
+                        <td th:text="${search.phone}">phone</td>
+                        <td th:text="${search.email}">email</td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    <table class="table table-active">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>CRUD</th>
+        </tr>
+        <tr th:each="user:${users}">
+            <td th:text="${user.name}"></td><br/>
+            <td th:text="${user.email}"></td><br/>
+            <td th:text="${user.phone}"></td><br/>
+            <td>
+                <a th:href="@{/edit?id={id}(id=${user.id})}" class="btn btn-primary">Edit</a>
+                <a th:href="@{/delete?id={id}(id=${user.id})}"class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    </table>
+        <a href="/add" class="btn btn-success">Create New User</a>
+</div>
+</body>
+</html>
